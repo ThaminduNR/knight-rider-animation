@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Light Animation</title>
+    <style>
+        body {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: black;
+        }
+
+        #light-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+            width: fit-content;
+            height: fit-content;
+
+        }
+
+        #light-panel .light {
+            width: 50px;
+            height: 20px;
+            border: 2px solid black;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+
+    <section id="light-panel">
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+
+    </section>
+    <audio src="assets/music/Knight Rider - Original Show Intro.mp3" id="audio"></audio>
+
+    <script src="assets/lib/jquery-3.6.4.min.js"></script>
+    <script>
+
+        let time;
+
+        $("#start").on("click", () => {
+            clearInterval(time);
+            $("#audio")[0].play();
+            time = setInterval(updateLight, 100);
+
+        });
+
+        $("#stop").on("click", () => {
+            clearInterval(time);
+            $("#audio")[0].pause();
+        });
+
+        var light = $(".light");
+        var direction = "RIGHT";
+
+        var lightNumber = 0;
+        console.log(light);
+
+
+        function updateLight() {
+            console.log("Updated");
+            $(".light").css({ background: "white" });
+            light[lightNumber].style.background = "red";
+
+            if (lightNumber > 0) {
+                light[lightNumber - 1].style.background = "pink";
+            }
+
+            if (lightNumber < 6) {
+                light[lightNumber + 1].style.background = "pink";
+            }
+
+            if (lightNumber === 6) {
+                direction = "LEFT";
+            }
+
+            if (lightNumber === 0) {
+                direction = "RIGHT";
+            }
+
+            if (direction === "RIGHT") {
+                lightNumber++;
+            } else {
+                lightNumber--;
+            }
+
+
+
+
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>
